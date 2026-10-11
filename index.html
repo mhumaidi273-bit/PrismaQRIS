@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./banking.css">
   <link rel="stylesheet" href="./prisma-theme.css">
+  <link rel="stylesheet" href="./mobile.css?v=20261011">
   <script defer src="./kur.js"></script>
   <script defer src="./demo.js"></script>
   <script defer src="./report-demo.js"></script>
@@ -64,7 +65,7 @@
   <main class="app-shell">
     <header class="topbar">
       <div class="topbar-left">
-        <button class="icon-button mobile-menu" id="menuButton" aria-label="Buka menu"><svg><use href="#i-menu"/></svg></button>
+        <button class="icon-button mobile-menu" id="menuButton" aria-label="Buka menu" aria-controls="sidebar" aria-expanded="false"><svg><use href="#i-menu"/></svg></button>
         <button class="mobile-brand" data-page-jump="dashboard" aria-label="PRISMA · kembali ke ringkasan"><img src="./prisma-logo.svg" alt="" width="32" height="32"></button>
         <div><span class="eyebrow" id="todayLabel">—</span><h2 id="pageTitle">Ringkasan usaha</h2></div>
       </div>
