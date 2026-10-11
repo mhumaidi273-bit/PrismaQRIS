@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10172a">
+  <meta name="description" content="PRISMA mengubah transaksi QRIS dan struk tunai menjadi pencatatan keuangan UMKM yang rapi dan siap mendukung penilaian pembiayaan.">
+  <title>PRISMA — Pencatatan UMKM berbasis QRIS</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M30 7 6 51 30 38Z' fill='%23856aff'/%3E%3Cpath d='m34 7 24 44-24-13Z' fill='%235b41d9'/%3E%3Cpath d='m10 55 22-12 22 12Z' fill='%232dd4bf'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./banking.css">
+  <link rel="stylesheet" href="./prisma-theme.css">
+  <script defer src="./kur.js"></script>
+  <script defer src="./demo.js"></script>
+  <script defer src="./report-demo.js"></script>
+  <script defer src="./kur-demo.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2M7 12h10"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M8 7h8M8 11h6"/></symbol>
+    <symbol id="i-bank" viewBox="0 0 24 24"><path d="m3 9 9-5 9 5M5 10v7M9.5 10v7M14.5 10v7M19 10v7M3 20h18"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 7.8 7.5 9.5 4.3-1.7 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 5 16 7h3a2 2 0 0 1 2 2v9H3V9a2 2 0 0 1 2-2h3l1.5-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 6h15a2 2 0 0 1 2 2v10H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h13"/><path d="M16 11h5v4h-5a2 2 0 0 1 0-4"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/></symbol>
+  </svg>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark"><img src="./prisma-logo.svg" alt="" width="44" height="44"></div>
+      <div><strong>PRISMA</strong><small>Catatan usaha Anda</small></div>
+    </div>
+    <nav class="side-nav" aria-label="Navigasi utama">
+      <p class="nav-label">Ruang kerja</p>
+      <button class="nav-item active" data-page="dashboard"><svg><use href="#i-grid"/></svg><span>Ringkasan</span></button>
+      <button class="nav-item" data-page="scanner"><svg><use href="#i-scan"/></svg><span>Data transaksi</span><b>QRIS</b></button>
+      <button class="nav-item" data-page="transactions"><svg><use href="#i-list"/></svg><span>Transaksi</span></button>
+      <button class="nav-item" data-page="finance"><svg><use href="#i-book"/></svg><span>Jurnal & laporan</span></button>
+      <p class="nav-label">Pembiayaan</p>
+      <button class="nav-item" data-page="financing"><svg><use href="#i-bank"/></svg><span>Kesiapan KUR</span></button>
+      <button class="nav-item" data-page="consent"><svg><use href="#i-shield"/></svg><span>Data & persetujuan</span></button>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="mini-profile"><span>WB</span><div><strong id="sideBusiness">Warung Berkah</strong><small>Ruang kerja lokal</small></div></div>
+      <p>Settlement QRIS dan OCR diproses sesuai persetujuan.</p>
+    </div>
+  </aside>
+  <button class="scrim" id="scrim" aria-label="Tutup menu"></button>
+
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-button mobile-menu" id="menuButton" aria-label="Buka menu"><svg><use href="#i-menu"/></svg></button>
+        <button class="mobile-brand" data-page-jump="dashboard" aria-label="PRISMA · kembali ke ringkasan"><img src="./prisma-logo.svg" alt="" width="32" height="32"></button>
+        <div><span class="eyebrow" id="todayLabel">—</span><h2 id="pageTitle">Ringkasan usaha</h2></div>
+      </div>
+      <div class="topbar-actions">
+        <span class="sync-state"><i></i> Lokal & aman</span>
+        <button class="icon-button" id="themeButton" aria-label="Ubah tema"><svg><use href="#i-sun"/></svg></button>
+        <button class="icon-button notification" id="notificationButton" aria-label="Lihat status usaha"><svg><use href="#i-bell"/></svg><i></i></button>
+        <button class="business-chip" data-page-jump="consent"><span>WB</span><b>Warung Berkah</b></button>
+      </div>
+    </header>
+
+    <div class="content">
+      <label class="period-control">Periode ringkasan & laporan<select id="reportPeriod" aria-label="Periode ringkasan dan laporan"></select></label>
+      <section class="page active" data-page="dashboard">
+        <div class="hero-panel">
+          <div class="hero-copy">
+            <span class="section-kicker">Ruang usaha Anda</span>
+            <h1>Ringkasan usaha</h1>
+            <p>Pantau catatan penjualan dan biaya usaha dalam satu tempat.</p>
+            <div class="hero-actions">
+              <button class="button primary" data-page-jump="scanner"><svg><use href="#i-scan"/></svg>Rekam transaksi</button>
+              <button class="button secondary" data-page-jump="finance"><svg><use href="#i-book"/></svg>Lihat laporan</button>
+            </div>
+          </div>
+          <div class="hero-signal" aria-label="Selisih pendapatan dan beban">
+            <div class="orb"><small>Selisih pendapatan & beban</small><span id="heroNet">+Rp 0</span><small>Bukan saldo rekening · belum disesuaikan</small></div>
+            <div class="signal-note"><div><small id="heroRecordCount">0 transaksi tercatat</small></div></div>
+          </div>
+        </div>
+
+        <div class="metrics-grid">
+          <article class="metric-card"><div class="metric-head"><span>Omzet periode terpilih</span><b class="trend neutral" id="metricRevenueTrend">belum ada pembanding</b></div><strong id="metricRevenue">Rp 0</strong><small>Dari transaksi yang tercatat</small></article>
+          <article class="metric-card"><div class="metric-head"><span>Beban tercatat</span><b class="trend neutral" id="metricExpenseTrend">belum ada pembanding</b></div><strong id="metricExpense">Rp 0</strong><small>Tidak termasuk pembelian aset</small></article>
+          <article class="metric-card"><div class="metric-head"><span>Selisih pendapatan − beban</span><b class="trend neutral" id="metricMargin">Belum disesuaikan</b></div><strong id="metricProfit">Rp 0</strong><small>Belum seluruh HPP, penyusutan, dan pajak</small></article>
+          <article class="metric-card accent-card"><div class="metric-head"><span>Dokumentasi QRIS</span><b>Internal</b></div><strong><span id="metricScore">0</span><em>/100</em></strong><small>Kelengkapan laporan GoPay yang diunggah</small></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="card chart-card">
+            <div class="card-heading"><div><span class="section-kicker">Kinerja 6 bulan</span><h3>Pendapatan dan beban tercatat</h3></div><div class="legend"><span><i class="rev"></i>Pendapatan</span><span><i class="exp"></i>Beban</span></div></div>
+            <div class="chart-wrap" id="cashChart" aria-label="Grafik omzet dan pengeluaran enam bulan"></div>
+          </article>
+          <article class="card activity-card">
+            <div class="card-heading"><div><span class="section-kicker">Aktivitas terbaru</span><h3>Transaksi masuk</h3></div><button class="text-button" data-page-jump="transactions">Semua</button></div>
+            <div class="activity-list" id="activityList"></div>
+          </article>
+        </div>
+
+        <article class="card flow-strip">
+          <div><span class="section-kicker">Kerangka B2B2G</span><h3>Satu alur data, beberapa manfaat</h3><p>Transaksi menjadi informasi usaha tanpa mengambil alih kewenangan bank maupun SLIK.</p></div>
+          <div class="mini-flow"><span>UMKM</span><i>→</i><span>PRISMA</span><i>→</i><span>LJK / KUR</span><i>→</i><span>Kebijakan agregat</span></div>
+        </article>
+      </section>
+
+      <section class="page" data-page="scanner">
+        <div class="page-intro"><div><span class="section-kicker">Sumber data</span><h1>Data transaksi</h1><p>Settlement QRIS menjadi sumber pemasukan; OCR struk tetap melengkapi pengeluaran non-digital.</p></div><span class="privacy-note"><svg><use href="#i-shield"/></svg>Impor laporan penjual</span></div>
+        <div class="capture-tabs" role="tablist">
+          <button class="capture-tab active" data-capture="qris" role="tab" aria-selected="true"><svg><use href="#i-scan"/></svg><span><b>Data masuk QRIS</b><small>Primer · settlement penjual</small></span></button>
+          <button class="capture-tab" data-capture="ocr" role="tab" aria-selected="false"><svg><use href="#i-receipt"/></svg><span><b>OCR struk tunai</b><small>Sekunder · pelengkap</small></span></button>
+          <button class="capture-tab" data-capture="demo" role="tab" aria-selected="false"><svg><use href="#i-bell"/></svg><span><b>Demo otomatis</b><small>Simulasi · bukan transaksi nyata</small></span></button>
+        </div>
+
+        <div class="capture-panel active" data-capture-panel="qris">
+          <div class="sync-layout">
+            <article class="card qris-connection-card">
+              <div class="card-heading"><div><span class="section-kicker">Sumber transaksi</span><h3>Transaksi GoPay Merchant</h3></div><span class="connection-status" id="qrisConnectionStatus">Belum terhubung</span></div>
+              <p class="connection-copy">Sumber pemasukan: laporan transaksi QRIS milik penjual di GoPay Merchant. Sinkronisasi langsung belum diaktifkan; impor laporan tersedia di bawah.</p>
+              <div class="connection-form">
+                <label class="field-label">Sumber laporan<select id="qrisProvider"><option value="gopay_merchant">GoPay Merchant</option></select></label>
+                <ol class="import-guide"><li>Buka GoPay Merchant sebagai pemilik usaha.</li><li>Pilih Keuangan, cabang usaha, lalu Download pada Aktivitas terakhir.</li><li>Pilih periode, unduh laporan, lalu unggah CSV/JSON di sini.</li></ol>
+                <a href="https://gopay.co.id/bantuan-merchant/pembayaran-qris/cara-download-laporan-transaksi" target="_blank" rel="noopener noreferrer">Panduan resmi GoPay Merchant ↗</a>
+              </div>
+              <div class="settlement-import"><div><b>Impor laporan transaksi QRIS</b><small>Unggah CSV asli GoPay Merchant tanpa mengubah kolom. Harga, MDR, promo, dan pendapatan bersih diperiksa otomatis. Duplikat dilewati; baris bermasalah disertai alasan.</small></div><button class="button secondary compact" type="button" id="importSettlement"><svg><use href="#i-upload"/></svg>Impor laporan</button><input type="file" id="settlementFile" accept=".csv,.json,text/csv,application/json" hidden></div>
+              <div class="import-summary" id="qrisImportSummary" aria-live="polite" hidden></div><div class="qris-last-sync"><span id="qrisLastSync">Belum ada impor</span><b id="qrisTransactionsFound">0 transaksi baru</b></div>
+            </article>
+            <article class="card qris-sync-log-card"><div class="card-heading"><div><span class="section-kicker">Kontrol sinkronisasi</span><h3>Aktivitas sumber data</h3></div><svg class="sync-log-icon"><use href="#i-shield"/></svg></div><div class="sync-log" id="qrisSyncLog"><div class="sync-log-empty"><svg><use href="#i-scan"/></svg><p>Impor laporan QRIS untuk mulai mencatat pemasukan.</p></div></div><div class="provider-note"><svg><use href="#i-info"/></svg><span>Status dibaca dari laporan yang Anda unggah, bukan verifikasi langsung ke GoPay. Pembayaran berhasil dan pencairan ke rekening adalah dua tahap berbeda.</span></div></article>
+          </div>
+        </div>
+
+        <div class="capture-panel" data-capture-panel="demo">
+          <article class="card demo-console" id="qrisDemo">
+            <div class="demo-heading"><div><span class="demo-badge">DEMO TERISOLASI</span><h2>Dari pembayaran ke pencatatan.</h2><p>Lihat tiga pembayaran QRIS contoh masuk bertahap dan membentuk jurnal secara otomatis.</p></div><span class="demo-session">Toko Contoh · sesi sementara</span></div>
+            <div class="demo-disclaimer"><svg><use href="#i-shield"/></svg><p>Ini simulasi, <strong>bukan koneksi langsung ke GoPay</strong>. Data contoh tidak masuk ke transaksi, jurnal, laporan, KUR, atau ekspor usaha Anda. Impor GoPay Merchant dan OCR tetap tersedia di tab sebelah.</p></div>
+            <div class="demo-controls"><button type="button" class="button primary" id="demoStart"><svg><use href="#i-arrow"/></svg><span>Mulai demo otomatis</span></button><button type="button" class="button secondary" id="demoPause" disabled>Jeda</button><button type="button" class="text-button" id="demoReset" disabled>Reset demo</button><span id="demoStatus" role="status" aria-live="polite">Siap · 0 dari 3 transaksi contoh</span></div>
+            <ol class="demo-pipeline" aria-label="Tahapan simulasi pencatatan"><li data-demo-stage="received"><span>01</span><div><b>Pembayaran masuk</b><small>Notifikasi QRIS contoh</small></div></li><li data-demo-stage="validated"><span>02</span><div><b>Data diperiksa</b><small>Status, nominal, dan ID</small></div></li><li data-demo-stage="posted"><span>03</span><div><b>Jurnal terbentuk</b><small>Debit & kredit otomatis</small></div></li></ol>
+            <div class="demo-metrics"><div><span>Transaksi demo tercatat</span><strong id="demoCount">0 / 3</strong></div><div><span>Pendapatan kotor contoh</span><strong id="demoGross">Rp 0</strong></div><div><span>Biaya & promo contoh</span><strong id="demoFees">Rp 0</strong></div><div><span>Tagihan bersih contoh</span><strong id="demoNet">Rp 0</strong></div></div>
+            <div class="demo-stream-heading"><h3>Aktivitas pembayaran contoh</h3><span>QRIS · bukan uang sungguhan</span></div>
+            <div id="demoFeed" class="demo-feed"><p class="demo-empty">Tekan “Mulai demo otomatis”. Pembayaran contoh akan muncul di sini tanpa perlu diinput satu per satu.</p></div>
+            <div class="demo-ledger-heading"><div><h3>Jurnal demo</h3><p>Dibuat dari transaksi contoh di atas, terpisah dari jurnal usaha.</p></div><span id="demoBalance" class="ledger-balance">Belum ada jurnal demo</span></div>
+            <div class="table-scroll"><table><caption class="sr-only">Jurnal simulasi QRIS, bukan catatan usaha nyata</caption><thead><tr><th>Referensi demo</th><th>Kode & akun</th><th>Debit</th><th>Kredit</th></tr></thead><tbody id="demoJournal"></tbody><tfoot id="demoTotals"></tfoot></table></div>
+            <p class="demo-footnote">Nominal, produk, MDR, dan promo di sini hanya contoh, bukan tarif resmi. Pembayaran berhasil belum membuktikan pencairan bank; nilai bersih dicontohkan sebagai piutang penyelenggara QRIS. Simulasi dijeda saat meninggalkan tab ini dan hilang saat halaman dimuat ulang.</p>
+          </article>
+        </div>
+
+        <div class="capture-panel" data-capture-panel="ocr">
+          <div class="scanner-layout">
+            <article class="scanner-card receipt-upload">
+              <div class="receipt-drop" id="receiptDrop"><svg><use href="#i-receipt"/></svg><h3>Unggah foto struk</h3><p>Gunakan foto tegak, terang, dan tidak terpotong.</p><button class="button secondary" id="uploadReceipt"><svg><use href="#i-upload"/></svg>Pilih gambar</button><input type="file" id="receiptFile" accept="image/*" hidden></div>
+              <img id="receiptPreview" alt="Pratinjau struk" hidden>
+              <div class="ocr-progress" id="ocrProgress" hidden><div><span id="ocrStage">Menyiapkan OCR…</span><b id="ocrPercent">0%</b></div><i><span id="ocrBar"></span></i><small>OCR membutuhkan koneksi saat pertama digunakan.</small></div>
+            </article>
+            <article class="card ocr-result">
+              <div class="empty-result" id="ocrEmpty"><div class="result-icon"><svg><use href="#i-receipt"/></svg></div><h3>Belum ada struk diproses</h3><p>Hasil OCR tetap perlu diperiksa sebelum masuk ke jurnal.</p></div>
+              <form id="ocrForm" hidden>
+                <div class="result-status"><span class="warning"><svg><use href="#i-info"/></svg>Perlu verifikasi</span><button type="button" class="icon-button small" id="resetOcr" aria-label="Reset OCR"><svg><use href="#i-close"/></svg></button></div>
+                <label class="field-label">Merchant<input id="ocrMerchant" required></label>
+                <div class="field-grid"><label class="field-label">Tanggal<input id="ocrDate" type="date" required></label><label class="field-label">Total<input id="ocrAmount" inputmode="numeric" required></label></div>
+                <p class="verification-note">Periksa nama toko, tanggal, dan total pada foto. Isian yang tidak terbaca dibiarkan kosong. Selisih produk dapat berasal dari pajak, diskon, atau kesalahan OCR.</p><div class="ocr-items-head"><label class="field-label">Produk · jumlah · harga satuan</label><button class="text-button" type="button" id="addOcrItem">+ Tambah produk</button></div>
+                <div class="ocr-items" id="ocrItems"></div>
+                <div class="ocr-reconciliation" id="ocrReconciliation"><span>Jumlah item: <b id="ocrItemsTotal">Rp 0</b></span><span id="ocrMatchStatus">Periksa sebelum menyimpan</span></div>
+                <label class="field-label">Akun pembelian / beban<select id="ocrCategory" required></select></label>
+                <label class="field-label">Pembayaran struk<select id="ocrPayment" required><option value="">Pilih sesuai bukti pembayaran</option><option value="1101">Kas · dibayar tunai</option><option value="1102">Bank · dibayar dari rekening usaha</option><option value="2101">Utang usaha · belum dibayar</option></select></label>
+                <p class="verification-note">Barang untuk dijual atau bahan yang belum dipakai adalah persediaan, bukan langsung beban. Peralatan berumur lebih dari satu periode masuk aset tetap. Pilih beban hanya untuk manfaat yang sudah digunakan.</p>
+                <details class="raw-text"><summary>Lihat teks mentah OCR</summary><pre id="ocrRaw"></pre></details>
+                <button class="button primary full" type="submit"><svg><use href="#i-check"/></svg>Simpan pengeluaran</button>
+              </form>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="transactions">
+        <div class="page-intro"><div><span class="section-kicker">Buku transaksi</span><h1>Riwayat transaksi</h1><p>Semua transaksi QRIS dan struk tunai yang telah direkam.</p></div><button class="button primary" data-page-jump="scanner"><svg><use href="#i-scan"/></svg>Tambah transaksi</button></div>
+        <article class="card table-card">
+          <div class="table-tools"><div class="filter-pills"><button class="active" data-filter="all">Semua</button><button data-filter="qris">QRIS</button><button data-filter="ocr">Struk</button></div><label class="search-field"><span>⌕</span><input id="transactionSearch" placeholder="Cari merchant…"></label></div>
+          <div class="table-scroll"><table><thead><tr><th>Tanggal</th><th>Sumber</th><th>Uraian</th><th>Akun</th><th>Nominal</th><th></th></tr></thead><tbody id="transactionRows"></tbody></table></div>
+          <div class="table-empty" id="transactionEmpty" hidden>Tidak ada transaksi yang cocok.</div>
+        </article>
+      </section>
+
+      <section class="page" data-page="finance">
+        <div class="page-intro"><div><span class="section-kicker">Pembukuan usaha</span><h1>Jurnal & laporan</h1><p>Tinjau data usaha Anda atau pelajari contoh pembukuan warung makan.</p></div></div>
+        <div class="finance-mode" role="group" aria-label="Sumber jurnal dan laporan"><button type="button" id="financeRealButton" aria-pressed="true" aria-controls="financeReal">Data usaha saya</button><button type="button" id="financeDemoButton" aria-pressed="false" aria-controls="financeDemo">Contoh UMKM <span>DEMO</span></button></div>
+        <div id="financeDemo" hidden></div>
+        <div id="financeReal">
+        <p class="account-notice" id="journalWarning"></p>
+        <div class="report-grid"><article class="report-card"><span>Pendapatan tercatat</span><strong id="reportRevenue">Rp 0</strong><small>Periode terpilih</small></article><article class="report-card"><span>Beban tercatat</span><strong id="reportExpense">Rp 0</strong><small>Tidak termasuk pembelian aset</small></article><article class="report-card dark"><span>Selisih pendapatan − beban</span><strong id="reportProfit">Rp 0</strong><small>Bukan laba final; belum seluruh penyesuaian</small></article></div>
+        <article class="card table-card">
+          <div class="card-heading"><div><span class="section-kicker">Jurnal umum</span><h3>Jurnal periode terpilih</h3></div><span class="ledger-balance" id="journalBalance">Belum ada jurnal</span></div>
+          <div class="table-scroll"><table><thead><tr><th>Tanggal</th><th>Referensi</th><th>Kode, akun & kelompok</th><th>Debit</th><th>Kredit</th></tr></thead><tbody id="journalRows"></tbody><tfoot id="journalTotals"></tfoot></table></div>
+        </article>
+        <div class="dashboard-grid finance-bottom"><article class="card"><div class="card-heading"><div><span class="section-kicker">Mutasi debit dikurangi kredit</span><h3>Perubahan aset pada periode</h3></div></div><div class="balance-list"><div><span>Piutang penyelenggara QRIS</span><b id="bankBalance">Rp 0</b></div><div><span>Kas</span><b id="cashBalance">Rp 0</b></div><div><span>Persediaan</span><b id="assetBalance">Rp 0</b></div></div><p class="verification-note">Mutasi bukan saldo akhir. Nilai negatif dapat terjadi karena saldo awal belum dimasukkan; bukan bukti saldo kas negatif.</p></article><article class="card note-card"><svg><use href="#i-info"/></svg><div><h3>Dasar pencatatan</h3><p>Laporan transaksi QRIS tidak membuktikan pencairan bank. PRISMA menampung tagihan bersih pada piutang penyelenggara pembayaran sampai direkonsiliasi; jangan menganggapnya saldo piutang aktual setelah pencairan. MDR menjadi beban jasa pembayaran dan promo menjadi beban promosi sesuai kolom laporan. Pendapatan usaha mengasumsikan barang/jasa sudah diserahkan; ubah menjadi uang muka pelanggan jika belum.</p><p>Struk lama mengikuti asumsi kas versi sebelumnya. Periksa akun dan sumber pembayarannya di Riwayat transaksi. Persediaan diakui sebagai beban saat dijual/digunakan; HPP dan penyusutan tidak ditaksir dari total pembayaran.</p></div></article></div>
+        <article class="card table-card finance-bottom"><div class="card-heading"><div><span class="section-kicker">Rekap jurnal</span><h3>Mutasi per akun</h3></div></div><div class="table-scroll"><table><thead><tr><th>Kode</th><th>Akun</th><th>Kelompok penyajian</th><th>Debit</th><th>Kredit</th></tr></thead><tbody id="accountBalances"></tbody></table></div></article>
+        <details class="card account-reference"><summary>Daftar akun dan rujukan SAK EMKM</summary><p>Kode berikut adalah kode internal PRISMA, bukan kode resmi IAI. Akun rinci dipetakan ke kelompok aset, liabilitas, ekuitas, pendapatan, dan beban. Daftar ini tidak membuktikan bahwa setiap jenis transaksi sudah didukung. Akun penyesuaian, modal, utang bank, dan saldo awal memerlukan pencatatan di luar alur impor saat ini.</p><div class="table-scroll"><table><thead><tr><th>Kode</th><th>Nama akun</th><th>Unsur</th><th>Kelompok penyajian</th></tr></thead><tbody id="accountDirectory"></tbody></table></div><p>Rujukan IAI: <a href="https://www.iaiglobal.or.id/v03/files/file_sak/emkm/files/basic-html/page62.html" target="_blank" rel="noopener noreferrer">contoh laporan posisi keuangan</a>, <a href="https://www.iaiglobal.or.id/v03/files/file_sak/emkm/files/basic-html/page63.html" target="_blank" rel="noopener noreferrer">contoh laporan laba rugi</a>, dan <a href="https://www.iaiglobal.or.id/v03/files/file_sak/emkm/files/basic-html/page33.html" target="_blank" rel="noopener noreferrer">persediaan</a>. Laporan lengkap juga membutuhkan informasi komparatif dan catatan atas laporan keuangan.</p></details>
+        </div>
+      </section>
+
+      <section class="page" data-page="financing">
+        <div class="page-intro"><div><span class="section-kicker">Bukti usaha dari transaksi</span><h1>Kesiapan KUR</h1><p>Telusuri kekuatan dan keterbatasan catatan usaha dari laporan GoPay Merchant yang Anda unggah.</p></div><span class="status-chip">Indikator dokumentasi</span></div>
+        <div class="finance-mode" role="group" aria-label="Sumber analisis KUR"><button type="button" id="kurRealButton" aria-pressed="true" aria-controls="kurReal">Data usaha saya</button><button type="button" id="kurDemoButton" aria-pressed="false" aria-controls="kurDemo">Contoh UMKM <span>DEMO</span></button></div>
+        <div id="kurDemo" hidden></div>
+        <div id="kurReal">
+        <div class="kur-scope"><label>Toko dalam laporan<select id="kurMerchant" aria-label="Toko untuk analisis KUR"></select></label><p id="kurScope"></p></div>
+        <div id="kurEmpty" class="card kur-empty" hidden>Belum ada transaksi GoPay Merchant pada pilihan ini. Impor laporan atau pilih periode lain untuk melihat analisis.</div>
+        <div id="kurContent">
+          <div class="financing-grid kur-overview">
+            <article class="score-card"><span class="section-kicker">Indeks dokumentasi QRIS</span><div class="score-ring" id="scoreRing"><div><strong id="scoreValue">0</strong><span>/100</span></div></div><span class="score-label" id="scoreLabel">Belum ada data</span><p id="scoreNarrative"></p><p class="kur-method">Nilai internal untuk dokumentasi. Bukan skor bank, peluang persetujuan, atau batas kredit.</p></article>
+            <article class="card component-card"><div class="card-heading"><div><span class="section-kicker">Perhitungan terbuka</span><h3>Mengapa nilainya demikian?</h3></div></div><div id="scoreComponents"></div><p class="kur-method">Setiap komponen maksimal 25 poin; hasil dibulatkan ke bilangan terdekat. Persetujuan berbagi dan profil usaha tidak menambah nilai.</p></article>
+          </div>
+          <div class="kur-metrics" id="kurMetrics"></div>
+          <div class="kur-tabs" role="tablist" aria-label="Rincian kesiapan KUR">
+            <button class="kur-tab active" id="kurTabMonthly" role="tab" aria-selected="true" aria-controls="kurMonthly">Pola transaksi</button>
+            <button class="kur-tab" id="kurTabCash" role="tab" aria-selected="false" aria-controls="kurCash">Arus kas & biaya</button>
+            <button class="kur-tab" id="kurTabEvidence" role="tab" aria-selected="false" aria-controls="kurEvidence">Kualitas & sumber data</button>
+          </div>
+          <div class="kur-panel" id="kurMonthly" role="tabpanel" aria-labelledby="kurTabMonthly"></div>
+          <div class="kur-panel" id="kurCash" role="tabpanel" aria-labelledby="kurTabCash" hidden></div>
+          <div class="kur-panel" id="kurEvidence" role="tabpanel" aria-labelledby="kurTabEvidence" hidden></div>
+        </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="consent">
+        <div class="page-intro"><div><span class="section-kicker">Kendali pemilik usaha</span><h1>Data & persetujuan</h1><p>Atur tujuan penggunaan data. Tidak ada data yang dibagikan tanpa persetujuan Anda.</p></div><span class="privacy-note"><svg><use href="#i-shield"/></svg>Consent-based</span></div>
+        <div class="consent-grid">
+          <article class="card consent-card"><div class="consent-icon bank"><svg><use href="#i-bank"/></svg></div><div class="consent-copy"><h3>Informasi pendukung untuk LJK mitra</h3><p>Ringkasan omzet, arus kas, konsistensi transaksi, dan laporan keuangan untuk proses penilaian pembiayaan.</p><small>Tidak mencakup foto struk mentah.</small></div><label class="switch"><input type="checkbox" id="consentLjk"><span></span></label></article>
+          <article class="card consent-card"><div class="consent-icon gov"><svg><use href="#i-grid"/></svg></div><div class="consent-copy"><h3>Data agregat untuk kebijakan UMKM</h3><p>Statistik yang telah diagregasi dan dianonimkan untuk membantu perumusan kebijakan.</p><small>Tidak memuat identitas usaha individual.</small></div><label class="switch"><input type="checkbox" id="consentGov"><span></span></label></article>
+        </div>
+        <article class="card sharing-card"><div><span class="section-kicker">Berbagi terarah</span><h3>Unduh paket data sesuai tujuan</h3><p>PRISMA membuat file baru di perangkat Anda. Anda yang memilih kapan dan kepada siapa file itu diberikan.</p></div><div class="sharing-actions"><button class="button secondary" id="exportLjk"><svg><use href="#i-download"/></svg>Paket untuk LJK</button><button class="button secondary" id="exportGov"><svg><use href="#i-download"/></svg>Agregat kebijakan</button></div></article>
+        <article class="card architecture-card"><div class="card-heading"><div><span class="section-kicker">Arsitektur pertukaran data</span><h3>Dari transaksi menuju manfaat</h3></div><span class="status-chip">B2B2G</span></div><div class="architecture-flow"><div class="flow-node source"><span>01</span><svg><use href="#i-wallet"/></svg><b>UMKM</b><small>QRIS primer<br>OCR sekunder</small></div><i>→</i><div class="flow-node process"><span>02</span><svg><use href="#i-grid"/></svg><b>PRISMA</b><small>Ekstraksi, klasifikasi,<br>router keyakinan</small></div><i>→</i><div class="flow-node ledger"><span>03</span><svg><use href="#i-book"/></svg><b>Ledger SAK EMKM</b><small>Dimiliki dan<br>dikendalikan UMKM</small></div><i>→</i><div class="flow-destinations"><div><svg><use href="#i-bank"/></svg><span><b>LJK / KUR</b><small>Atas persetujuan</small></span></div><div><svg><use href="#i-grid"/></svg><span><b>Pemerintah</b><small>Data agregat anonim</small></span></div></div></div></article>
+        <article class="card profile-card"><div><span class="section-kicker">Profil usaha</span><h3>Identitas usaha</h3><p>Digunakan untuk personalisasi laporan dan paket data yang Anda unduh.</p></div><form id="profileForm"><label>Nama usaha<input id="businessName" value="Warung Berkah" required></label><label>Jenis usaha<input id="businessType" value="Kuliner"></label><label>Kota<input id="businessCity" value="Tangerang Selatan"></label><button class="button secondary" type="submit">Simpan profil</button></form></article>
+        <article class="card data-tools-card"><div><span class="section-kicker">Portabilitas data</span><h3>Cadangkan atau pindahkan data</h3><p>Ekspor semua transaksi dan profil sebagai JSON. Impor hanya file cadangan PRISMA yang Anda kenal.</p></div><div class="data-tools"><button class="button secondary" id="exportBackup"><svg><use href="#i-download"/></svg>Ekspor cadangan</button><button class="button secondary" id="importBackup"><svg><use href="#i-upload"/></svg>Impor cadangan</button><input type="file" id="backupFile" accept="application/json,.json" hidden><button class="button danger-outline" id="clearData"><svg><use href="#i-trash"/></svg>Hapus data lokal</button></div></article>
+      </section>
+    </div>
+  </main>
+
+  <nav class="mobile-nav" aria-label="Navigasi seluler"><button class="active" data-page="dashboard"><svg><use href="#i-grid"/></svg><span>Beranda</span></button><button data-page="scanner"><svg><use href="#i-scan"/></svg><span>Rekam</span></button><button data-page="transactions"><svg><use href="#i-list"/></svg><span>Transaksi</span></button><button data-page="finance"><svg><use href="#i-book"/></svg><span>Laporan</span></button><button data-page="financing"><svg><use href="#i-bank"/></svg><span>KUR</span></button></nav>
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <div class="sr-only" id="liveRegion" aria-live="assertive"></div>
+</body>
+</html>
