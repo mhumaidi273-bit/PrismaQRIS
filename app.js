@@ -256,6 +256,18 @@
     }, 3600);
   }
 
+  function setMobileMenu(open, returnFocus = false) {
+    const mobile = window.matchMedia('(max-width: 940px)').matches;
+    const expanded = open && mobile;
+    $("#sidebar").classList.toggle("open", expanded);
+    $("#scrim").classList.toggle("open", expanded);
+    document.body.classList.toggle('menu-open', expanded);
+    $("#menuButton").setAttribute('aria-expanded', String(expanded));
+    $("#sidebar").inert = mobile && !expanded;
+    if (expanded) $("#sidebar .nav-item.active")?.focus();
+    else if (returnFocus && mobile) $("#menuButton").focus();
+  }
+
   function setPage(page) {
     if (!pageTitles[page]) return;
     if (page !== 'scanner') qrisDemo?.pause();
@@ -264,9 +276,13 @@
     $$(".page").forEach((item) => item.classList.toggle("active", item.dataset.page === page));
     $$("[data-page]").filter((item) => item.matches("button")).forEach((item) => item.classList.toggle("active", item.dataset.page === page));
     $("#pageTitle").textContent = pageTitles[page];
-    $("#sidebar").classList.remove("open");
-    $("#scrim").classList.remove("open");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    $$('.side-nav [data-page], .mobile-nav [data-page]').forEach(button => {
+      if (button.dataset.page === page) button.setAttribute('aria-current', 'page');
+      else button.removeAttribute('aria-current');
+    });
+    const focusWasInMenu = $("#sidebar").contains(document.activeElement);
+    setMobileMenu(false, focusWasInMenu);
+    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
     if (page === "dashboard") renderDashboard();
     if (page === "transactions") renderTransactions();
     if (page === "finance") renderFinance();
@@ -999,8 +1015,31 @@
     $("#reportPeriod").addEventListener("change", (event) => { selectedPeriod = event.target.value; renderAll(); });
     $$("[data-page]").filter((item) => item.matches("button")).forEach((button) => button.addEventListener("click", () => setPage(button.dataset.page)));
     $$('[data-page-jump]').forEach((button) => button.addEventListener("click", () => setPage(button.dataset.pageJump)));
-    $("#menuButton").addEventListener("click", () => { $("#sidebar").classList.add("open"); $("#scrim").classList.add("open"); });
-    $("#scrim").addEventListener("click", () => { $("#sidebar").classList.remove("open"); $("#scrim").classList.remove("open"); });
+    $("#menuButton").addEventListener("click", () => setMobileMenu(true));
+    $("#scrim").addEventListener("click", () => setMobileMenu(false, true));
+    window.matchMedia('(max-width: 940px)').addEventListener('change', () => setMobileMenu(false));
+    setMobileMenu(false);
+    $$('.side-nav .active, .mobile-nav .active').forEach(button => button.setAttribute('aria-current', 'page'));
+    document.addEventListener('keydown', event => {
+      if (!document.body.classList.contains('menu-open')) return;
+      if (event.key === 'Escape') { event.preventDefault(); setMobileMenu(false, true); }
+      if (event.key === 'Tab') {
+        const buttons = $$('#sidebar button:not([disabled])');
+        const first = buttons[0], last = buttons.at(-1);
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
+    });
+    $$('.table-scroll').forEach(wrapper => {
+      if (wrapper.closest('[data-page="transactions"]')) return;
+      wrapper.tabIndex = 0;
+      wrapper.setAttribute('role', 'region');
+      wrapper.setAttribute('aria-label', 'Tabel rincian, geser ke samping untuk kolom lainnya');
+      const hint = document.createElement('p');
+      hint.className = 'mobile-table-hint';
+      hint.textContent = 'Geser tabel ke samping untuk melihat semua kolom ↔';
+      wrapper.before(hint);
+    });
     $("#themeButton").addEventListener("click", () => {
       state.theme = state.theme === "dark" ? "light" : "dark";
       document.documentElement.dataset.theme = state.theme;
